@@ -1,10 +1,13 @@
-<html>
+<!DOCTYPE html>
+<html lang="en">
   <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Random Meme</title>
   </head>
   <body>
     <div class="caption"></div>
-    <div class="container"><a class="img"></a></div>
+    <div class="container"></div>
     <h1 id="text">Loading please wait :)</h1>
     <div class="bottom">
       <h3>This page generate random meme per reload.</h3>
@@ -12,24 +15,35 @@
 
     <style>
       html {
-        font-family: "Comic Sans MS", "Comic Sans", cursive;
+        overflow-x: hidden;
+        font-family: "Comic Sans MS", "Comic Sans";
       }
       .caption {
         text-align: center;
+        position: relative;
       }
       .bottom {
         text-align: center;
+        position: relative;
       }
       .container {
         display: flex;
+        align-items: center;
         justify-content: center;
-        align-content: center;
+        padding: 15px auto 15px auto;
       }
+
       .meme {
         height: auto;
-        width: auto;
-        max-width: 600px;
-        max-height: 600px;
+        width: 100%;
+        max-width: 500px;
+        padding-left: 0;
+        padding-right: 0;
+      }
+      @media only screen and (min-device-width: 414px) and (max-device-width: 736px) {
+        .meme {
+          max-width: 350px;
+        }
       }
       #authorLink {
         text-decoration: none;
@@ -43,11 +57,11 @@
       var bottom = document.querySelector(".bottom");
       var button = document.createElement("button");
 
-      var body = document.querySelector(" .img");
+      var body = document.querySelector(" .container");
       var img = document.createElement("img");
       var caption = document.querySelector(".caption");
 
-      var author = document.createElement("h1");
+      var author = document.createElement("h2");
       var authorLink = document.createElement("a");
 
       var captionText = document.createElement("h2");
@@ -60,7 +74,6 @@
             try {
               img.src = data.url;
               img.className = "meme";
-              body.setAttribute("href", data.postLink);
               loading.innerHTML = "";
               author.textContent = `author: u/${data.author}`;
               captionText.textContent = `${data.title}`;
