@@ -1,0 +1,93 @@
+<html>
+  <head>
+    <title>Random Meme</title>
+  </head>
+  <body>
+    <div class="caption"></div>
+    <div class="container"><a class="img"></a></div>
+    <h1 id="text">Loading please wait :)</h1>
+    <div class="bottom">
+      <h3>This page generate random meme per reload.</h3>
+    </div>
+
+    <style>
+      html {
+        font-family: "Comic Sans MS", "Comic Sans", cursive;
+      }
+      .caption {
+        text-align: center;
+      }
+      .bottom {
+        text-align: center;
+      }
+      .container {
+        display: flex;
+        justify-content: center;
+        align-content: center;
+      }
+      .meme {
+        height: auto;
+        width: auto;
+        max-width: 600px;
+        max-height: 600px;
+      }
+      #authorLink {
+        text-decoration: none;
+        color: #037387;
+      }
+      #text {
+        text-align: center;
+      }
+    </style>
+    <script>
+      var bottom = document.querySelector(".bottom");
+      var button = document.createElement("button");
+
+      var body = document.querySelector(" .img");
+      var img = document.createElement("img");
+      var caption = document.querySelector(".caption");
+
+      var author = document.createElement("h1");
+      var authorLink = document.createElement("a");
+
+      var captionText = document.createElement("h2");
+      var loading = document.getElementById("text");
+
+      async function getData() {
+        await fetch("https://meme-api.herokuapp.com/gimme")
+          .then((res) => res.json())
+          .then((data) => {
+            try {
+              img.src = data.url;
+              img.className = "meme";
+              body.setAttribute("href", data.postLink);
+              loading.innerHTML = "";
+              author.textContent = `author: u/${data.author}`;
+              captionText.textContent = `${data.title}`;
+              authorLink.setAttribute(
+                "href",
+                `https://reddit.com/user/${data.author}`
+              );
+              authorLink.id = "authorLink";
+              button.setAttribute("onclick", "window.location.reload();");
+              button.textContent = "Reload";
+
+              authorLink.append(author);
+              caption.appendChild(authorLink);
+              caption.appendChild(captionText);
+              body.appendChild(img);
+              bottom.append(button);
+            } catch (error) {
+              if (error) {
+                console.log(error);
+                return;
+              }
+            }
+
+            console.log(data);
+          });
+      }
+      getData();
+    </script>
+  </body>
+</html>
