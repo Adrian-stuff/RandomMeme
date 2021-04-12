@@ -77,6 +77,10 @@
             try {
               img.src = data.url;
               img.className = "meme";
+              img.setAttribute(
+                "onclick",
+                `window.location='${data.postLink}';`
+              );
               loading.innerHTML = "";
               author.textContent = `author: u/${data.author}`;
               captionText.textContent = `${data.title}`;
