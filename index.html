@@ -4,21 +4,35 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Random Meme</title>
+    <script defer src="script.js"></script>
   </head>
   <body>
+    <form class="form" onsubmit="setUrl();">
+      <input
+        id="input"
+        type="text"
+        onfocus="resetInput()"
+        placeholder="set subreddit"
+      />
+      <button onclick="setUrl();">Set subreddit</button>
+      <button onclick="reset();">Reset</button>
+    </form>
     <div class="caption"></div>
     <div class="container"></div>
     <h1 id="text">Loading please wait :)</h1>
     <div class="bottom">
       <h3>This page generate random meme per reload.</h3>
     </div>
-
     <style>
       @font-face {
         font-family: Comic-Sans;
         src: url(COMIC.TTF);
       }
       html {
+        font-family: "Comic-Sans";
+      }
+      input,
+      button {
         font-family: "Comic-Sans";
       }
       .caption {
@@ -29,13 +43,15 @@
         text-align: center;
         position: relative;
       }
+      .form {
+        text-align: center;
+      }
       .container {
         display: flex;
         align-items: center;
         justify-content: center;
         padding: 15px auto 15px auto;
       }
-
       .meme {
         height: auto;
         width: 100%;
@@ -48,66 +64,14 @@
           max-width: 350px;
         }
       }
-      #authorLink {
+      #Link {
         text-decoration: none;
         color: #037387;
+        line-height: 50%;
       }
       #text {
         text-align: center;
       }
     </style>
-    <script>
-      var bottom = document.querySelector(".bottom");
-      var button = document.createElement("button");
-
-      var body = document.querySelector(" .container");
-      var img = document.createElement("img");
-      var caption = document.querySelector(".caption");
-
-      var author = document.createElement("h2");
-      var authorLink = document.createElement("a");
-
-      var captionText = document.createElement("h2");
-      var loading = document.getElementById("text");
-
-      async function getData() {
-        await fetch("https://meme-api.herokuapp.com/gimme")
-          .then((res) => res.json())
-          .then((data) => {
-            try {
-              img.src = data.url;
-              img.className = "meme";
-              img.setAttribute(
-                "onclick",
-                `window.location='${data.postLink}';`
-              );
-              loading.innerHTML = "";
-              author.textContent = `author: u/${data.author}`;
-              captionText.textContent = `${data.title}`;
-              authorLink.setAttribute(
-                "href",
-                `https://reddit.com/user/${data.author}`
-              );
-              authorLink.id = "authorLink";
-              button.setAttribute("onclick", "window.location.reload();");
-              button.textContent = "Reload";
-
-              authorLink.append(author);
-              caption.appendChild(authorLink);
-              caption.appendChild(captionText);
-              body.appendChild(img);
-              bottom.append(button);
-            } catch (error) {
-              if (error) {
-                console.log(error);
-                return;
-              }
-            }
-
-            console.log(data);
-          });
-      }
-      getData();
-    </script>
   </body>
 </html>
