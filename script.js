@@ -58,7 +58,7 @@ async function getData() {
     .then((res) => res.json())
     .then((data) => {
       try {
-        if (data.postLink === undefined) {
+        if (data.subreddit === undefined) {
           reset();
           window.location.reload();
           return;
