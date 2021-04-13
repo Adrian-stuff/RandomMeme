@@ -61,7 +61,6 @@ async function getData() {
         if (data.code === 404) {
           reset();
           window.location.reload();
-          return;
         } else setData(data);
       } catch (error) {
         if (error) {
