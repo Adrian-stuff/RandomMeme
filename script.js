@@ -71,6 +71,7 @@ async function getData() {
         }
       }
       console.log("btw: ", data);
+      console.log("api link: https://meme-api.herokuapp.com/gimme");
     });
 }
 input.value = link;
