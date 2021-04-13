@@ -8,12 +8,7 @@
   </head>
   <body>
     <form class="form" onsubmit="setUrl();">
-      <input
-        id="input"
-        type="text"
-        onfocus="resetInput()"
-        placeholder="set subreddit"
-      />
+      <input id="input" type="text" placeholder="set subreddit" />
       <button onclick="setUrl();">Set subreddit</button>
       <button onclick="reset();">Reset</button>
     </form>
@@ -21,7 +16,9 @@
     <div class="container"></div>
     <h1 id="text">Loading please wait :)</h1>
     <div class="bottom">
-      <h3>This page generate random meme per reload.</h3>
+      <h3 style="color: rgb(56, 5, 56)">
+        This page generate random meme per reload.
+      </h3>
     </div>
     <style>
       @font-face {
@@ -30,6 +27,12 @@
       }
       html {
         font-family: "Comic-Sans";
+        background-image: url(rainbow2.jpg);
+      }
+      body {
+        background-image: url(doge.png);
+        background-size: 125px 125px;
+        background-repeat: repeat;
       }
       input,
       button {
@@ -37,7 +40,6 @@
       }
       .caption {
         text-align: center;
-        position: relative;
       }
       .bottom {
         text-align: center;
@@ -66,7 +68,7 @@
       }
       #Link {
         text-decoration: none;
-        color: #037387;
+        color: #1dffb4;
         line-height: 50%;
       }
       #text {

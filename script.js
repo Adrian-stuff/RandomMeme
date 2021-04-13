@@ -21,7 +21,7 @@ function setData(data) {
   img.className = "meme";
   img.setAttribute("onclick", `window.open('${data.postLink}', '_blank');`);
   loading.innerHTML = "";
-  author.textContent = `author: u/${data.author}`;
+  author.textContent = `u/${data.author}`;
   captionText.textContent = `${data.title}`;
   authorLink.setAttribute("href", `https://reddit.com/user/${data.author}`);
   authorLink.setAttribute("target", "_blank");
@@ -58,22 +58,27 @@ async function getData() {
     .then((res) => res.json())
     .then((data) => {
       try {
-        setData(data);
+        if (data.postLink === undefined) {
+          reset();
+          window.location.reload();
+          return;
+        } else setData(data);
       } catch (error) {
         if (error) {
-          console.log(error);
+          loading.innerHTML = "Error occured pls try again xD";
+          button.innerHTML = "Reload";
+          bottom.append(button);
           return;
         }
       }
-
-      console.log(data);
+      console.log("btw: ", data);
     });
 }
 input.value = link;
 
 console.log(
   "%cWarning!",
-  "color:red;font-family:system-ui;font-size:4rem;-webkit-text-stroke: 1px black;font-weight:bold"
+  "color:red;font-family:system-ui;font-size:2rem;-webkit-text-stroke: 1px black;font-weight:bold"
 );
 console.log(
   "%cthe source code is messy pls dont open xD",
