@@ -47,6 +47,7 @@ function setUrl() {
 }
 function reset() {
   localStorage.clear();
+  window.location.reload();
 }
 
 async function getData() {
@@ -55,23 +56,19 @@ async function getData() {
       ? `https://meme-api.herokuapp.com/gimme/${link}`
       : "https://meme-api.herokuapp.com/gimme"
   )
-    .then((res) => res.json())
-    .then((data) => {
-      try {
-        if (data.code === 404) {
-          reset();
-          window.location.reload();
-        } else setData(data);
-      } catch (error) {
-        if (error) {
-          loading.innerHTML = "Error occured pls try again xD";
-          button.innerHTML = "Reload";
-          bottom.append(button);
-          return;
-        }
+    .then((res) => {
+      if (!res.ok) {
+        throw Error(res.statusText);
       }
+      return res.json();
+    })
+    .then((data) => {
+      setData(data);
       console.log("btw: ", data);
       console.log("api link: https://meme-api.herokuapp.com/gimme");
+    })
+    .catch(() => {
+      reset();
     });
 }
 input.value = link;
